@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi proyecto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <nav class="flex items-center justify-between px-6 py-4 bg-gray-900 text-white">
+    <a href="#" class="text-xl font-bold tracking-tight">MiLogo</a>
+    <ul class="flex items-center gap-6">
+      <li><a href="#" class="hover:text-blue-400 transition-colors">Inicio</a></li>
+      <li><a href="#" class="hover:text-blue-400 transition-colors">Proyectos</a></li>
+      <li><a href="#" class="hover:text-blue-400 transition-colors">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <h1>Hola Mundo desde el futuro de la programación</h1>
+  <p>Bienvenido a tu primer proyecto web: una página sencilla construida con HTML5 semántico.</p>
+
+  <div class="mx-6 mt-4 flex flex-wrap gap-3">
+    <button id="btn-alerta" type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors">
+      Mostrar alerta
+    </button>
+    <button id="btn-modo" type="button" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors">
+      Modo oscuro
+    </button>
+  </div>
+
+  <section class="px-6 py-12">
+    <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Nuestros servicios</h2>
+    <div class="flex flex-col md:flex-row gap-6">
+      <article class="flex-1 bg-gray-800 text-white rounded-lg border border-blue-500/40 p-6">
+        <h3 class="text-lg font-semibold mb-2">Desarrollo web</h3>
+        <p class="text-gray-300 text-sm">Sitios y aplicaciones modernas, rápidas y adaptables a cualquier dispositivo.</p>
+      </article>
+      <article class="flex-1 bg-gray-800 text-white rounded-lg border border-blue-500/40 p-6">
+        <h3 class="text-lg font-semibold mb-2">Diseño UI/UX</h3>
+        <p class="text-gray-300 text-sm">Interfaces claras y atractivas pensadas para una experiencia de usuario fluida.</p>
+      </article>
+      <article class="flex-1 bg-gray-800 text-white rounded-lg border border-blue-500/40 p-6">
+        <h3 class="text-lg font-semibold mb-2">Consultoría técnica</h3>
+        <p class="text-gray-300 text-sm">Asesoramiento para elegir tecnologías, arquitectura y buenas prácticas en tu proyecto.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="px-6 pb-12">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Contáctanos</h2>
+    <form id="form-contacto" class="max-w-md mx-auto flex flex-col gap-4 bg-gray-100 p-6 rounded-lg border border-gray-200">
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          required
+          placeholder="Escribe tu nombre"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+      </div>
+      <button
+        type="submit"
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors font-medium"
+      >
+        Enviar
+      </button>
+    </form>
+    <p id="mensaje-bienvenida" class="max-w-md mx-auto mt-4 text-center text-lg font-medium text-blue-700 hidden"></p>
+  </section>
+
+  <div class="contenedor">
+    <p>Contenedor — caja padre</p>
+
+    <div class="tarjeta bg-gray-800 text-white rounded-lg border border-blue-500/40 p-4 mt-6">
+      <p>Tarjeta — caja hijo</p>
+
+      <div class="texto">
+        <p>Texto — caja nieto</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleModoOscuro() {
+      document.body.classList.toggle('bg-black');
+      document.body.classList.toggle('text-white');
+    }
+
+    document.getElementById('btn-alerta').addEventListener('click', function () {
+      alert('¡Hola!');
+    });
+
+    document.getElementById('btn-modo').addEventListener('click', toggleModoOscuro);
+
+    const CLAVE_NOMBRE = 'nombreUsuario';
+    const formContacto = document.getElementById('form-contacto');
+    const inputNombre = document.getElementById('nombre');
+    const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
+
+    function mostrarBienvenida(nombre) {
+      mensajeBienvenida.textContent = 'Bienvenido, ' + nombre;
+      mensajeBienvenida.classList.remove('hidden');
+    }
+
+    function cargarNombreGuardado() {
+      const nombreGuardado = localStorage.getItem(CLAVE_NOMBRE);
+      if (nombreGuardado) {
+        inputNombre.value = nombreGuardado;
+        mostrarBienvenida(nombreGuardado);
+      }
+    }
+
+    formContacto.addEventListener('submit', function (evento) {
+      evento.preventDefault();
+      const nombre = inputNombre.value.trim();
+      if (nombre) {
+        localStorage.setItem(CLAVE_NOMBRE, nombre);
+        mostrarBienvenida(nombre);
+      }
+    });
+
+    cargarNombreGuardado();
+  </script>
+</body>
+
+</html> 
