@@ -18,8 +18,8 @@
     </ul>
   </nav>
 
-  <h1>Hola Mundo desde el futuro de la programación</h1>
-  <p>Bienvenido a tu primer proyecto web: una página sencilla construida con HTML5 semántico.</p>
+  <h1 data-tema="titulo" class="text-4xl font-bold text-center px-6 mt-10 text-gray-900">Hola Mundo desde el futuro de la programación</h1>
+  <p data-tema="parrafo" class="text-center text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto px-6 mt-4 mb-8">Bienvenido a tu primer proyecto web: una página sencilla construida con HTML5 semántico.</p>
 
   <div class="mx-6 mt-4 flex flex-wrap gap-3">
     <button id="btn-alerta" type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors">
@@ -31,7 +31,7 @@
   </div>
 
   <section class="px-6 py-12">
-    <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">Nuestros servicios</h2>
+    <h2 data-tema="titulo" class="text-2xl font-bold text-gray-900 mb-8 text-center">Nuestros servicios</h2>
     <div class="flex flex-col md:flex-row gap-6">
       <article class="flex-1 bg-gray-800 text-white rounded-lg border border-blue-500/40 p-6">
         <h3 class="text-lg font-semibold mb-2">Desarrollo web</h3>
@@ -49,17 +49,18 @@
   </section>
 
   <section class="px-6 pb-12">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Contáctanos</h2>
-    <form id="form-contacto" class="max-w-md mx-auto flex flex-col gap-4 bg-gray-100 p-6 rounded-lg border border-gray-200">
+    <h2 data-tema="titulo" class="text-2xl font-bold text-gray-900 mb-6 text-center">Contáctanos</h2>
+    <form id="form-contacto" data-tema="formulario" class="max-w-md mx-auto flex flex-col gap-4 bg-gray-100 p-6 rounded-lg border border-gray-200">
       <div>
-        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+        <label for="nombre" data-tema="etiqueta" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
         <input
           type="text"
           id="nombre"
           name="nombre"
+          data-tema="entrada"
           required
           placeholder="Escribe tu nombre"
-          class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
       </div>
       <button
@@ -69,32 +70,69 @@
         Enviar
       </button>
     </form>
-    <p id="mensaje-bienvenida" class="max-w-md mx-auto mt-4 text-center text-lg font-medium text-blue-700 hidden"></p>
+    <p id="mensaje-bienvenida" data-tema="mensaje" class="max-w-md mx-auto mt-4 text-center text-lg font-medium text-blue-700 hidden"></p>
   </section>
 
-  <div class="contenedor">
-    <p>Contenedor — caja padre</p>
-
-    <div class="tarjeta bg-gray-800 text-white rounded-lg border border-blue-500/40 p-4 mt-6">
-      <p>Tarjeta — caja hijo</p>
-
-      <div class="texto">
-        <p>Texto — caja nieto</p>
-      </div>
-    </div>
-  </div>
-
   <script>
+    const btnModo = document.getElementById('btn-modo');
+
+    const clasesTema = {
+      titulo: {
+        claro: ['text-gray-900'],
+        oscuro: ['text-white']
+      },
+      parrafo: {
+        claro: ['text-gray-600'],
+        oscuro: ['text-gray-300']
+      },
+      formulario: {
+        claro: ['bg-gray-100', 'border-gray-200'],
+        oscuro: ['bg-gray-800', 'border-gray-700']
+      },
+      etiqueta: {
+        claro: ['text-gray-700'],
+        oscuro: ['text-gray-200']
+      },
+      entrada: {
+        claro: ['bg-white', 'border-gray-300', 'text-gray-900'],
+        oscuro: ['bg-gray-700', 'border-gray-600', 'text-white']
+      },
+      mensaje: {
+        claro: ['text-blue-700'],
+        oscuro: ['text-blue-400']
+      }
+    };
+
+    function aplicarTema(oscuro) {
+      document.body.classList.toggle('bg-black', oscuro);
+      document.body.classList.toggle('text-white', oscuro);
+      document.body.classList.toggle('modo-oscuro', oscuro);
+
+      Object.keys(clasesTema).forEach(function (tipo) {
+        const tema = clasesTema[tipo];
+        document.querySelectorAll('[data-tema="' + tipo + '"]').forEach(function (elemento) {
+          tema.claro.forEach(function (clase) {
+            elemento.classList.toggle(clase, !oscuro);
+          });
+          tema.oscuro.forEach(function (clase) {
+            elemento.classList.toggle(clase, oscuro);
+          });
+        });
+      });
+
+      btnModo.textContent = oscuro ? 'Modo claro' : 'Modo oscuro';
+    }
+
     function toggleModoOscuro() {
-      document.body.classList.toggle('bg-black');
-      document.body.classList.toggle('text-white');
+      const activarOscuro = !document.body.classList.contains('modo-oscuro');
+      aplicarTema(activarOscuro);
     }
 
     document.getElementById('btn-alerta').addEventListener('click', function () {
       alert('¡Hola!');
     });
 
-    document.getElementById('btn-modo').addEventListener('click', toggleModoOscuro);
+    btnModo.addEventListener('click', toggleModoOscuro);
 
     const CLAVE_NOMBRE = 'nombreUsuario';
     const formContacto = document.getElementById('form-contacto');
