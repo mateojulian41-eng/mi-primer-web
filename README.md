@@ -1,6 +1,7 @@
-# J&M Lavados
 
-Plataforma web desarrollada para fortalecer la presencia digital de una empresa de servicios de limpieza y facilitar la captación de clientes.
+# Mi Primer Web
+
+Proyecto académico desarrollado para practicar fundamentos de desarrollo web frontend.
 
 ## Características
 
@@ -19,16 +20,12 @@ Plataforma web desarrollada para fortalecer la presencia digital de una empresa 
 - Git
 - GitHub
 
+
 ## Objetivo
 
-Desarrollar una solución web profesional que permitiera mejorar la presencia digital del negocio y facilitar el contacto con clientes potenciales.
-
-## Proyecto en línea
-
-🔗 https://jymlavados.vercel.app
+Fortalecer las bases del desarrollo web mediante la construcción de una página sencilla y funcional.
 
 ## Autor
 
 Mateo Julián Payares Cárcamo
 
-📧 mateojulian41@gmail.com
